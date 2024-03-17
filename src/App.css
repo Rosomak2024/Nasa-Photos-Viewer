@@ -11,8 +11,20 @@ body{
 
 h1{
   font-size: 3rem;
-  color: white;
+  color: yellow;
   text-transform:uppercase;
+}
+
+h2{
+  color: white;
+}
+
+.explanation-inform{
+  color:white;
+}
+
+.date-inform{
+  color:greenyellow;
 }
 
 
