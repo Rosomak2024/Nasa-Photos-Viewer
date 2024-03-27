@@ -6,6 +6,7 @@ const View = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [count, setCount] = useState("");
 
   useEffect(() => {
     let apiUrl = "";
@@ -13,20 +14,32 @@ const View = () => {
       apiUrl = `https://api.nasa.gov/planetary/apod?api_key=RQlqLMnsMGXA1tDO50bIqQ2Sk30xXKVWmE9xNekJ&start_date=${startDate}&end_date=${endDate}`;
     } else if (selectedDate) {
       apiUrl = `https://api.nasa.gov/planetary/apod?api_key=RQlqLMnsMGXA1tDO50bIqQ2Sk30xXKVWmE9xNekJ&date=${selectedDate}`;
-    } else {
+    }
+    // else if (count) {
+    //   apiUrl = `https://api.nasa.gov/planetary/apod?api_key=RQlqLMnsMGXA1tDO50bIqQ2Sk30xXKVWmE9xNekJ&count=${count}`;
+    // }
+    else {
       apiUrl = `https://api.nasa.gov/planetary/apod?api_key=RQlqLMnsMGXA1tDO50bIqQ2Sk30xXKVWmE9xNekJ`;
     }
 
+    if (count) {
+      apiUrl += `&count=${count}`;
+    }
     axios
-      .get(apiUrl)
+      .get(apiUrl, {
+        mode: "corse",
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
       .then((response) => {
         setPhotoData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         console.error("Error download:", error);
       });
-  }, [selectedDate, startDate, endDate]);
+  }, [selectedDate, startDate, endDate, count]);
 
   const handleSelectedChange = (e) => {
     setSelectedDate(e.target.value);
@@ -34,29 +47,38 @@ const View = () => {
   };
 
   return (
-    <div>
-      <input
-        type="date"
-        id="start"
-        name="trip-start"
-        onChange={handleSelectedChange}
-        value={selectedDate}
-      />
-      <input
-        type="date"
-        id="startDate"
-        name="trip-start"
-        onChange={(e) => setStartDate(e.target.value)}
-        value={startDate}
-        // max={endDate}
-      />
-      <input
-        type="date"
-        id="endDate"
-        name="trip-start"
-        onChange={(e) => setEndDate(e.target.value)}
-        value={endDate}
-      />
+    <div className="container">
+      <div className="inputs-container">
+        <label>Podaj datę</label>
+        <input
+          type="date"
+          id="start"
+          name="trip-start"
+          onChange={handleSelectedChange}
+          value={selectedDate}
+        />
+        <label>Podaj pierwszą datę z zakresu</label>
+        <input
+          type="date"
+          id="startDate"
+          name="trip-start"
+          onChange={(e) => setStartDate(e.target.value)}
+          value={startDate}
+          // max={endDate}
+        />
+        <label>Podaj drugą datę z zakresu</label>
+        <input
+          type="date"
+          id="endDate"
+          name="trip-start"
+          onChange={(e) => setEndDate(e.target.value)}
+          value={endDate}
+        />
+        <button id="randome" onClick={() => setCount("10")}>
+          Randome
+        </button>
+      </div>
+      console.log(setCount)
       {photoData ? (
         Array.isArray(photoData) ? (
           <>
@@ -64,7 +86,7 @@ const View = () => {
             {photoData.map((item, index) => (
               <div key={index} className="photo2">
                 <img src={item.url} alt={item.title} />
-                <h3>{item.title}</h3>
+                <h2>{item.title}</h2>
                 <p>{item.explanation}</p>
                 <p>{item.date}</p>
               </div>
