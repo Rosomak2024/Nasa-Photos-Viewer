@@ -7,6 +7,7 @@ const View = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [count, setCount] = useState(null);
+  const maxDate = getMaxDate();
 
   useEffect(() => {
     let apiUrl = "";
@@ -29,7 +30,6 @@ const View = () => {
       })
       .then((response) => {
         setPhotoData(response.data);
-
         // console.log(response.data);
       })
       .catch((error) => {
@@ -37,38 +37,54 @@ const View = () => {
       });
   }, [selectedDate, startDate, endDate, count]);
 
-  const handleSelectedChange = (e) => {
-    setSelectedDate(e.target.value);
-    setStartDate("");
-    setEndDate("");
-    // console.log("e.target.value", e.target.value);
-  };
+  function getMaxDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    let day = today.getDate();
 
-  const handleButtonClick = () => {
+    if (month < 10) {
+      month = "0" + month;
+    }
+    if (day < 10) {
+      day = "0" + day;
+    }
+
+    return `${year}-${month}-${day}`;
+  }
+
+  function resetAllElements() {
     setSelectedDate("");
     setStartDate("");
     setEndDate("");
+    setCount("");
+  }
+
+  const handleSelectedChange = (e) => {
+    setSelectedDate(e.target.value);
+    // resetAllElements();
+    // setStartDate("");
+    // setEndDate("");
+    // setCount("");
+  };
+
+  const handleButtonClick = () => {
+    // resetAllElements();
     setCount("1");
   };
 
   const handleStartDateInput = (e) => {
-    setSelectedDate("");
-    setCount("");
+    // resetAllElements();
+
     setStartDate(e.target.value);
   };
 
   const handleEndDateInput = (e) => {
-    setSelectedDate("");
-    setCount("");
-
-    setEndDate(e.target.value);
+    // setEndDate(e.target.value);
   };
 
   const handleDataReset = () => {
-    setSelectedDate("");
-    setStartDate("");
-    setEndDate("");
-    setCount("");
+    resetAllElements();
   };
 
   return (
@@ -81,35 +97,38 @@ const View = () => {
           name="trip-start"
           onChange={handleSelectedChange}
           value={selectedDate}
+          max={maxDate}
         />
 
-        <label>Podaj pierwszą datę z zakresu</label>
+        <label>First Date of range</label>
         <input
           type="date"
           id="startDate"
           name="trip-start"
           onChange={handleStartDateInput}
           value={startDate}
+          max={maxDate}
         />
 
-        <label>Podaj drugą datę z zakresu</label>
+        <label>Second Date of range</label>
         <input
           type="date"
           id="endDate"
           name="trip-start"
           onChange={handleEndDateInput}
           value={endDate}
-          // max={endDate};
+          max={maxDate}
         />
+        <div className="buttons-container">
+          <button id="randome" onClick={handleButtonClick} value={count}>
+            Randome
+          </button>
 
-        <button id="randome" onClick={handleButtonClick} value={count}>
-          Randome
-        </button>
+          <button id="reset" onClick={handleDataReset}>
+            Reset Photos
+          </button>
+        </div>
       </div>
-
-      <button id="reset" onClick={handleDataReset}>
-        Reset Photos
-      </button>
 
       {photoData ? (
         Array.isArray(photoData) ? (
@@ -117,8 +136,8 @@ const View = () => {
             {console.log("Object is an array")}
             {photoData.map((item, index) => (
               <div key={index} className="photo2">
+                <h3>{item.title}</h3>
                 <img src={item.url} alt={item.title} />
-                <h2>{item.title}</h2>
                 <p>{item.explanation}</p>
                 <p>{item.date}</p>
               </div>
@@ -128,8 +147,8 @@ const View = () => {
           <>
             {console.log("Object is not an array")}
             <div className="photo">
-              <img src={photoData.url} alt={photoData.title} />
               <h3>{photoData.title}</h3>
+              <img src={photoData.url} alt={photoData.title} />
               <p>{photoData.explanation}</p>
               <p>{photoData.date}</p>
             </div>
