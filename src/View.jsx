@@ -62,10 +62,6 @@ const View = () => {
 
   const handleSelectedChange = (e) => {
     setSelectedDate(e.target.value);
-    // resetAllElements();
-    // setStartDate("");
-    // setEndDate("");
-    // setCount("");
   };
 
   const handleButtonClick = () => {
@@ -80,7 +76,7 @@ const View = () => {
   };
 
   const handleEndDateInput = (e) => {
-    // setEndDate(e.target.value);
+    setEndDate(e.target.value);
   };
 
   const handleDataReset = () => {
@@ -90,35 +86,50 @@ const View = () => {
   return (
     <div className="container">
       <div className="inputs-container">
-        <label>Show Photo from date:</label>
-        <input
-          type="date"
-          id="start"
-          name="trip-start"
-          onChange={handleSelectedChange}
-          value={selectedDate}
-          max={maxDate}
-        />
+        <label>
+          Show Photo from date:
+          <input
+            type="date"
+            id="start"
+            name="trip-start"
+            onChange={handleSelectedChange}
+            value={selectedDate}
+            max={maxDate}
+          />
+        </label>
 
-        <label>First Date of range</label>
-        <input
-          type="date"
-          id="startDate"
-          name="trip-start"
-          onChange={handleStartDateInput}
-          value={startDate}
-          max={maxDate}
-        />
+        <label>
+          First Date of range
+          <div>
+            <input
+              type="date"
+              id="startDate"
+              name="trip-start"
+              onChange={handleStartDateInput}
+              value={startDate}
+              max={maxDate}
+              required
+            />
+            <span className="validity"></span>
+          </div>
+        </label>
 
-        <label>Second Date of range</label>
-        <input
-          type="date"
-          id="endDate"
-          name="trip-start"
-          onChange={handleEndDateInput}
-          value={endDate}
-          max={maxDate}
-        />
+        <label>
+          Second Date of range
+          <div>
+            <input
+              type="date"
+              id="endDate"
+              name="trip-start"
+              onChange={handleEndDateInput}
+              value={endDate}
+              max={maxDate}
+              required
+            />
+            <span className="validity-2"></span>
+          </div>
+        </label>
+
         <div className="buttons-container">
           <button id="randome" onClick={handleButtonClick} value={count}>
             Randome
