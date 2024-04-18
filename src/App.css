@@ -142,10 +142,11 @@ width: 50%;
 
 img:hover{
     filter: brightness(1.2);
-    transform: scale(130%);
+    transform: scale(1.5) ;
     /* transform: rotate(360deg),scale(130%); */
-    transition: 0.6s ease;
+    
     position: absolute;
+    top:11rem;
 }
 
 .photo img, .photo2 img {

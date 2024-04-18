@@ -2,14 +2,18 @@ import React from "react";
 import "./App.css";
 import View from "./View";
 import Footer from "./Footer";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <h1>Nasa Photos Viewer</h1>
       <View />
+      <Routes>
+        <Route path="/view" element={<View />} />
+      </Routes>
       <Footer></Footer>
-    </>
+    </BrowserRouter>
   );
 }
 
