@@ -8,9 +8,8 @@ function App() {
   return (
     <BrowserRouter>
       <h1>Nasa Photos Viewer</h1>
-      <View />
       <Routes>
-        <Route path="/view" element={<View />} />
+        <Route path="/" element={<View />} />
       </Routes>
       <Footer></Footer>
     </BrowserRouter>
