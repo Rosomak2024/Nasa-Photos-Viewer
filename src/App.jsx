@@ -8,7 +8,7 @@ function App() {
   return (
     <BrowserRouter>
       <li>
-        <Link to="/app">App</Link>
+        <Link to="/app">APP START CLICK</Link>
       </li>
       <h1>Nasa Photos Viewer</h1>
       <Routes>
