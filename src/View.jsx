@@ -65,13 +65,10 @@ const View = () => {
   };
 
   const handleButtonClick = () => {
-    // resetAllElements();
     setCount("1");
   };
 
   const handleStartDateInput = (e) => {
-    // resetAllElements();
-
     setStartDate(e.target.value);
   };
 
